@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["fastf1_cache*"]
+
+[project]
+name = "f1-dashboard"
+version = "0.1.0"
+description = "FastAPI and Streamlit application for FastF1 data analysis"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",      # Required to run the FastAPI server
+    "sqlalchemy",
+    "psycopg2-binary",        # Standard PostgreSQL adapter for Python
+    "fastf1",
+    "streamlit",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",                 # Testing framework
+    "black",                  # Code formatter
+]

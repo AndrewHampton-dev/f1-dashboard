@@ -1,0 +1,12 @@
+LICENSE
+README.md
+pyproject.toml
+app/database.py
+app/main.py
+app/models.py
+app/repositories.py
+f1_dashboard.egg-info/PKG-INFO
+f1_dashboard.egg-info/SOURCES.txt
+f1_dashboard.egg-info/dependency_links.txt
+f1_dashboard.egg-info/requires.txt
+f1_dashboard.egg-info/top_level.txt
