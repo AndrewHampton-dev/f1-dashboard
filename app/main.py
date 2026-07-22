@@ -1,5 +1,4 @@
 import streamlit as st
-import fastf1
 from datetime import date
 import tempfile
 import os
@@ -26,6 +25,8 @@ import os
 
 #race.load()
 
+class StreamitApp:
+	pass
 
 
 

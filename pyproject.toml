@@ -10,7 +10,7 @@ exclude = ["fastf1_cache*"]
 [project]
 name = "f1-dashboard"
 version = "0.1.0"
-description = "FastAPI and Streamlit application for FastF1 data analysis"
+description = "Interactive Formula 1 statistics dashboard. Built with Python, PostgreSQL, Streamlit, and FastAPI. "
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [

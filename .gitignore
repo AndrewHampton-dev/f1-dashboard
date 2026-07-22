@@ -1,6 +1,2 @@
-# Python virtual environments
 .venv/
-venv/
-env/
-ENV/
 fastf1_cache/
