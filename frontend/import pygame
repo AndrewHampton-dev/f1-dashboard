@@ -1,5 +1,0 @@
-import pygame
-import tkinter
-
-class Chip8Core:
-pass
