@@ -7,20 +7,21 @@ st.set_page_config(page_title="F1 Analytics", layout="wide")
 st.title("🏎️ Head-to-Head records")
 
 
-Season_list = ["2026", "2025", "2024", "2023"]
+driver_teams_by_season = {
+    "2023": {"Red Bull": ["Verstappen", "Perez"], "Mercedes": ["Hamilton", "Russell"]},
+    "2024": {"Red Bull": ["Verstappen", "Perez"], "Ferrari": ["Leclerc", "Sainz"]}
+}
 
 
+season = st.selectbox("Select a season", options= list(driver_teams_by_season.keys()))
 
-drivers_list = ["Max Verstappen", "Isack Hadjar", "Valtteri Bottas", 
-    "Lewis Hamilton", "Lando Norris","Oscar Piastri"]
+team = st.selectbox("Select a team", options= driver_teams_by_season[season].keys(), index=0)
 
+driver1 = st.selectbox("Please select the first driver", driver_teams_by_season[season][team])
 
-driver1 = st.selectbox("Please select the first driver", drivers_list)
+driver2 = st.selectbox("Please select the second driver", driver_teams_by_season[season][team])
 
-driver2 = st.selectbox("Please select the second driver", drivers_list)
-
-Season = st.selectbox("Please select a season", Season_list)
-
+st.write(f"You selected **{team}** from the **{season}** season.")
 
 
 
@@ -41,7 +42,7 @@ data = {
 }
 
 
-cd = pd.DataFrame(rng(0).standard_normal((20, 3)), columns=[Season, driver1, driver2])
+cd = pd.DataFrame(rng(0).standard_normal((20, 3)), columns=[season, driver1, driver2])
 
 
 chart_list = [
@@ -55,7 +56,7 @@ chart_options= st.selectbox("Select a chart",chart_list)
 if chart_options == "Points":
         st.line_chart(
         cd,
-        x=Season,
+        x=season,
         y=[driver1, driver2],
         color=["#FF0000", "#0000FF"],
         y_label="Points"
@@ -63,7 +64,6 @@ if chart_options == "Points":
 
 
 
-# 4. Build the DataFrame with the metrics as the row index
 df = pd.DataFrame(data, index=metrics)
 
 styled_df = df.style.applymap(
@@ -71,5 +71,4 @@ styled_df = df.style.applymap(
     subset='Winner'
 )
 
-# 5. Display it in Streamlit
 st.dataframe(styled_df, width="stretch")

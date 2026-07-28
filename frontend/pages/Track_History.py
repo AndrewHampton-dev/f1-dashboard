@@ -4,12 +4,16 @@ import pandas as pd
 st.set_page_config(page_title="F1 Analytics", layout="wide")
 st.title("🏎️ Track History records")
 
-Season_list = ["2026", "2025", "2024", "2023"]
-Season = st.selectbox("Please select a season", Season_list)
+tracks_by_seasons={
+	"2023": ["Monza", "Spa", "Monaco"],
+	"2024": ["Silverstone", "Montreal", "Interlagos"]
+}
 
-track_list = ["Monza GP", "Las Vega GP","Montrel GP", "Mexcian GP", "Interlagos GP", "Silverstone GP"]
+season = st.selectbox("Please select a season", list(tracks_by_seasons.keys()), index=0)
 
-track = st.selectbox("Please select a track", track_list)
+
+
+track = st.selectbox("Please select a track", options= tracks_by_seasons[season])
 
 metrics = [
 	"Course Name",
@@ -26,8 +30,8 @@ metrics = [
 ]
 
 data = {
-	track: ["Monza 2025 GP", 1921, " Michael Schumacher and Lewis Hamilton", "Ferrari (21)", "5.793 km (3.600 miles)", 
-	"369,0x041", "Max Verstappen (Red Bull)", "1:18.792", "Lando Norris (McLaren)",
+	track: ["Monza GP", 1921, " Michael Schumacher and Lewis Hamilton", "21 (Ferrari)", "5.793 km (3.600 miles)", 
+	"369,041", "Max Verstappen (Red Bull)", "1:18.792", "Lando Norris (McLaren)",
 	 "1:20.901", "1st Max Verstappen, 2nd Lando Norris, 3rd Oscar Piastri "]
 }
 
