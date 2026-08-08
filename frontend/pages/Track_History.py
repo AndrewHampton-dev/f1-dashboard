@@ -4,6 +4,8 @@ import pandas as pd
 st.set_page_config(page_title="F1 Analytics", layout="wide")
 st.title("🏎️ Track History records")
 
+
+
 tracks_by_seasons={
 	"2023": ["Monza", "Spa", "Monaco"],
 	"2024": ["Silverstone", "Montreal", "Interlagos"]
@@ -14,6 +16,8 @@ season = st.selectbox("Please select a season", list(tracks_by_seasons.keys()), 
 
 
 track = st.selectbox("Please select a track", options= tracks_by_seasons[season])
+
+
 
 metrics = [
 	"Course Name",
