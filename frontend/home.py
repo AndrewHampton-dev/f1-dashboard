@@ -52,15 +52,25 @@ constructor_standings = [{"Position": constructor_df.iloc[0]["Position"], "Team"
 
 col1, col2, col3 = st.columns(3)
 driver_standings = [
-    {"Position":  driver_df.iloc[0]["Position"], 
-    "FullName": driver_df.iloc[0]["FullName"], "Wins":driver_df.iloc[0]["Wins"]},
-    {"Position":  driver_df.iloc[1]["Position"],
-    "FullName": driver_df.iloc[1]["FullName"], "Points": driver_df.iloc[1]["Points"], "Wins":driver_df.iloc[1]["Wins"]},
-    {"Position":  driver_df.iloc[2]["Position"],
-    "FullName": driver_df.iloc[2]["FullName"], "Points": driver_df.iloc[2]["Points"], "Wins":driver_df.iloc[2]["Wins"]}
-    ]
-
-
+    {
+        "Position": driver_df.iloc[0]["Position"], 
+        "FullName": driver_df.iloc[0]["FullName"], 
+        "Points": driver_df.iloc[0]["Points"], 
+        "Wins": driver_df.iloc[0]["Wins"]
+    },
+    {
+        "Position": driver_df.iloc[1]["Position"],
+        "FullName": driver_df.iloc[1]["FullName"], 
+        "Points": driver_df.iloc[1]["Points"], 
+        "Wins": driver_df.iloc[1]["Wins"]
+    },
+    {
+        "Position": driver_df.iloc[2]["Position"],
+        "FullName": driver_df.iloc[2]["FullName"], 
+        "Points": driver_df.iloc[2]["Points"], 
+        "Wins": driver_df.iloc[2]["Wins"]
+    }
+]
 df = pd.DataFrame(driver_standings)
 
 cdf = pd.DataFrame(constructor_standings)
@@ -75,18 +85,23 @@ num = str(dif)
 next_race = str(remaining_races.iloc[0]["Location"])
 
 c1, c2,c3 = st.columns(3)
-c1.metric("Current Leader",  constructor_df.iloc[0]["Constructor"], num)
+c1.metric("Current Constructor Championship Leader",  constructor_df.iloc[0]["Constructor"], num)
 c2.metric("Closest Challenger",  constructor_df.iloc[1]["Constructor"], "-" + num)
 c3.metric("Races Remaining", num_remaining, "Next: " + next_race)
 
 dif = driver_df.iloc[0]["Points"] - driver_df.iloc[1]["Points"]
 
+dif2 = driver_df.iloc[0]["Points"] - driver_df.iloc[2]["Points"]
+
 col1, col2,col3 = st.columns(3)
 
 num = str(dif)
 
-col1.metric("Current Leader",  driver_df.iloc[0]["FullName"], num)
+num2 = str(dif2)
+
+col1.metric("Current Driver's Championship Leader",  driver_df.iloc[0]["FullName"], num)
 col2.metric("Closest Challenger",  driver_df.iloc[1]["FullName"], "-" + num)
+col3.metric("Closest Challenger",  driver_df.iloc[2]["FullName"], "-" + num2)
 
 
 st.subheader("Constructor Championships Standings")
