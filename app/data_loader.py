@@ -4,6 +4,9 @@ import pandas as pd
 from datetime import datetime 
 import os
 from fastf1.ergast import Ergast
+from app import repositiories
+
+Base.metadata.create_all(bind=engine)
 
 
 os.makedirs('fastf1_cache', exist_ok=True)

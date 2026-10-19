@@ -71,7 +71,6 @@ if st.sidebar.button("Show  Stats"):
         for index, season in enumerate(selected_seasons):
 
             stats = get_driver_stats(selected_seasons[index], driver_code)
-
             st.markdown(f"### 🏎️ {driver_code} Season {selected_seasons[index]}")
             st.metric("Team", stats["Team"])
             st.metric("Races", stats["Races"])

@@ -47,17 +47,16 @@ selected_drivers = st.sidebar.multiselect(
 )
  
 
-if st.button("Pit stops per driver"):
+if st.button("Pit Stop Duration"):
     if selected_drivers:
         pass
-
 
 if st.button("Show Tire compound"):
     fig, ax = plt.subplots(figsize=(8, 5))
     if selected_drivers:
         for driver in selected_drivers:
 
-                    # Track the starting lap position across sequential stints
+            # Track the starting lap position across sequential stints
             current_start_lap = 1 
             driver_laps = session.laps.pick_drivers(driver)
 
@@ -99,4 +98,24 @@ if st.button("Show Tire compound"):
     elif not selected_drivers:
         st.warning("No driver selected yet.")
 
-    
+if st.button("Tire Life"):
+    if selected_drivers:
+
+        for driver in selected_drivers:
+            driver_tyre = session.laps.pick_drivers(driver)
+            current_start_lap = 1 
+            for stint in driver_tyre["TyreLife"].unique()
+                stint_laps = driver_laps[driver_laps["Stint"] == stint]
+                trye_life = driver_tyre.iloc[0]['TyreLife']
+                num_laps = len(stint_laps)
+                color = fastf1.plotting.get_compound_color(trye_life, session=session)
+                ax.barh(
+                    y=driver,
+                    width=num_laps
+                )
+
+                
+
+
+
+

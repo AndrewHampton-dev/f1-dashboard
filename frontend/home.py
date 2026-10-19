@@ -5,7 +5,6 @@ import fastf1
 from fastf1.ergast import Ergast
 from datetime import datetime
 
-
 st.set_page_config(page_title="F1 Analytics", layout="wide")
 st.title("🏎️ Formula 1 Stats Dashboard")
 
