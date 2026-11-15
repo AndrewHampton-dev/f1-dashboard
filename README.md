@@ -72,9 +72,8 @@ FastF1 API ──► ingestion scripts ──► PostgreSQL ──► FastAPI �
 git clone https://github.com/AndrewHampton-dev/f1-dashboard.git
 cd F1_project
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
 
-# 2. Configure environment
+# 2. Configure environmen
 cp .env.example .env        # or create .env manually
 # .env needs:
 #   DATABASE_URL=postgresql+psycopg://user:pass@localhost:5432/f1_db
