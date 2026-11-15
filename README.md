@@ -62,7 +62,8 @@ FastF1 API ──► ingestion scripts ──► PostgreSQL ──► FastAPI �
 ├── alembic/              # Database migrations
 ├── tests/                # pytest suite (repository tests, real test DB)
 ├── .env                  # DATABASE_URL, TEST_DATABASE_URL (never committed)
-└── requirements.txt
+├── requirements.txt
+└── requirements-dev.txt
 ```
 
 ## 🚀 Getting Started
