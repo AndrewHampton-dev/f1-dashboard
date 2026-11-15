@@ -85,7 +85,7 @@ cp .env.example .env        # or create .env manually
 alembic upgrade head
 
 # 4. Load data (one-off; adjust season as needed)
-python -m app.historical_ingest --season 2025
+python -m app.ingest_race --season 2025
 
 # 5. Run the API
 uvicorn app.main:app --reload    # docs at http://localhost:8000/docs
