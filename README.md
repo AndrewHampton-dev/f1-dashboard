@@ -71,7 +71,7 @@ FastF1 API ──► ingestion scripts ──► PostgreSQL ──► FastAPI �
 ```bash
 # 1. Clone and set up environment
 git clone https://github.com/AndrewHampton-dev/f1-dashboard.git
-cd f1-dashboard-main
+cd F1-Project
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
