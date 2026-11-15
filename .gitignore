@@ -1,3 +1,7 @@
 .venv/
 fastf1_cache/
 .streamlit/
+.env
+*.egg-info/
+__pycache__/
+.pytest_cache

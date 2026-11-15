@@ -104,7 +104,7 @@ if st.button("Tire Life"):
         for driver in selected_drivers:
             driver_tyre = session.laps.pick_drivers(driver)
             current_start_lap = 1 
-            for stint in driver_tyre["TyreLife"].unique()
+            for stint in driver_tyre["TyreLife"].unique():
                 stint_laps = driver_laps[driver_laps["Stint"] == stint]
                 trye_life = driver_tyre.iloc[0]['TyreLife']
                 num_laps = len(stint_laps)

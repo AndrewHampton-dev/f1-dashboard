@@ -1,16 +1,14 @@
 import streamlit as st
-import fastf1 as ff1 
+import fastf1 as ff1
 import pandas as pd
-from datetime import datetime 
+from datetime import datetime
 import os
 from fastf1.ergast import Ergast
-from app import repositiories
-
-Base.metadata.create_all(bind=engine)
 
 
 os.makedirs('fastf1_cache', exist_ok=True)
 ff1.Cache.enable_cache('fastf1_cache')
+
 
 @st.cache_data
 def get_available_seasons():
@@ -22,15 +20,21 @@ def get_available_seasons():
 @st.cache_data
 def get_season_schedule(season):
     """Return the event schedule for a given season."""
-    return ff1.get_event_schedule(season, include_testing=False)
+    pass
+
+
+# @st.cache_data
+# def get_season_schedule(season):
+#    """Return the event schedule for a given season."""
+#    return ff1.get_event_schedule(season, include_testing=False)
 
 @st.cache_data
 def load_race_session(season, round_number):
-	schedule = ff1.get_event_schedule(season)
-	event = schedule[schedule["RoundNumber"] == "round_number"].iloc[0]
-	session = ff1.get_session(season, event["EventName"], "R")
+    schedule = ff1.get_event_schedule(season)
+    event = schedule[schedule["RoundNumber"] == "round_number"].iloc[0]
+    session = ff1.get_session(season, event["EventName"], "R")
 
-	session.load(laps=False, telemetry=False, weather=False, messages=False)
+    session.load(laps=False, telemetry=False, weather=False, messages=False)
 
 
 @st.cache_data
@@ -58,7 +62,7 @@ def get_driver_lap_time(season, event_name, driver):
         if laps.empty:
             return None
 
-        lap_data =  laps[["LapNumber", "LapTime","Compound", "TyreLife", "TrackStatus"]].copy()
+        lap_data = laps[["LapNumber", "LapTime", "Compound", "TyreLife", "TrackStatus"]].copy()
         # Convert times to seconds for easier analysis
         lap_data["LapTimeSeconds"] = lap_data["LapTime"].dt.total_seconds()
     except Exception as e:
@@ -79,22 +83,20 @@ def format_td(td):
     return f"{seconds:06.3f}"
 
 
-#Custom Y-axis Formatter function for MM:SS.mmm format
+# Custom Y-axis Formatter function for MM:SS.mmm format
 def racing_time_formatter(x, pos):
-    #Matplotlib converts pandas timedeltas to floating days internally on the axies
-    total_seconds = x * 86400 # Convert the days to total seconds
+    # Matplotlib converts pandas timedeltas to floating days internally on the axies
+    total_seconds = x * 86400  # Convert the days to total seconds
     minutes = int(total_seconds//60)
     seconds = int(total_seconds % 60)
     milliseconds = int(round((total_seconds % 1) * 1000))
-    
-    return f"{minutes:02d}:{seconds:02d}.{milliseconds:03d}"
 
+    return f"{minutes:02d}:{seconds:02d}.{milliseconds:03d}"
 
 
 @st.cache_data
 def get_teams_and_drivers(seasons: list):
     pass
-
 
    # for season in seasons:
   #      schedule = ff1.get_event_schedule(season, include_testing=False)
@@ -104,26 +106,24 @@ def get_teams_and_drivers(seasons: list):
    # for event in schedule_list:
     #    for _, event in schedule.iterrows():
     #        event_name = event["EventName"]
-      #      try:
-     #           race = ff1.get_session(season, event_name, "R")
-      #          race.load(laps= False, telemetry=False, weather=False, messages=False)
+    #      try:
+    #           race = ff1.get_session(season, event_name, "R")
+    #          race.load(laps= False, telemetry=False, weather=False, messages=False)
 
-           #     for _, row in race.results.iterrows():
-              #      driver = row["Abbreviation"]
-                #    team = row["TeamName"]
+    #     for _, row in race.results.iterrows():
+    #      driver = row["Abbreviation"]
+    #    team = row["TeamName"]
 
-                    # Add driver to this team's set
-                #    if team not in team_drivers:
-                #        team_drivers[team] = set()
-                  #  team_drivers[team].add(driver)
+    # Add driver to this team's set
+    #    if team not in team_drivers:
+    #        team_drivers[team] = set()
+    #  team_drivers[team].add(driver)
 
-
-          #  except Exception as e:
-            #    # Skip races that fail to load
-              #  continue
+    #  except Exception as e:
+    #    # Skip races that fail to load
+    #  continue
 
   #  return {team: sorted(list(drivers)) for team, drivers in team_drivers.items()}
-
 
 
 @st.cache_data
@@ -136,29 +136,29 @@ def get_season_teams_and_drivers(season):
 
     # Store all drivers per team
     team_drivers = {}
-    
+
     for _, event in schedule.iterrows():
         event_name = event["EventName"]
-        
+
         # Load the race session (lightweight, no telemetry)
         try:
             race = ff1.get_session(season, event_name, "R")
             race.load(laps=False, telemetry=False, weather=False, messages=False)
-            
+
             # Get unique driver-team combinations for this race
             for _, row in race.results.iterrows():
                 driver = row["Abbreviation"]
                 team = row["TeamName"]
-                
+
                 # Add driver to this team's set
                 if team not in team_drivers:
                     team_drivers[team] = set()
                 team_drivers[team].add(driver)
-                
+
         except Exception as e:
             # Skip races that fail to load
             continue
-    
+
     # Convert sets to sorted lists
     return {team: sorted(list(drivers)) for team, drivers in team_drivers.items()}
 
@@ -171,38 +171,37 @@ def get_tracks(season):
 
     for i, event in schedule.iterrows():
         tracks_list.insert(i, event["EventName"])
-       
+
     return tracks_list
-        
 
 
 @st.cache_data
 def get_track_stats(season, driver_code, trackname):
     pass
-    #session = ff1.get_session(season,trackname, "R")
-    #session.load(weather=False, messages=False)
+    # session = ff1.get_session(season,trackname, "R")
+    # session.load(weather=False, messages=False)
 
    # stats = {
-     #   "Races": 0,
-     #   "Wins": 0,
-     #   "Poles": 0,
-     #   "Started": 0,
-      #  "Finished": 0,
-     #   "Avg_Lap_Time": [],
-     #   "Sectors": []
+    #   "Races": 0,
+    #   "Wins": 0,
+    #   "Poles": 0,
+    #   "Started": 0,
+    #  "Finished": 0,
+    #   "Avg_Lap_Time": [],
+    #   "Sectors": []
 
    # }
 
    # results = session.results
 
    # driver_row = session.results[session.results["Abbreviation"] == driver_code]
-   #if driver_row.empty:
+   # if driver_row.empty:
     #    continue  # Driver didn't participate
 
     driver_row = driver_row.iloc[0]
     # Win
    # if driver_row["Position"] == 1:
-     #   stats["Wins"] = 1
+    #   stats["Wins"] = 1
 
 
 @st.cache_data
@@ -229,7 +228,7 @@ def get_driver_career_stats(driver_code):
             stats = get_driver_stats(season, driver_code)
 
             if stats["Races"] == 0:
-                continue # Driver didn't race this season
+                continue  # Driver didn't race this season
 
             career_stats["Seasons"] += 1
             career_stats["Races"] += stats["Races"]
@@ -260,6 +259,7 @@ def get_driver_career_stats(driver_code):
     career_stats["Teams"] = sorted(list(career_stats["Teams"]))
     return career_stats, pd.DataFrame(season_breakdown)
 
+
 @st.cache_data
 def get_laps():
     pass
@@ -269,7 +269,7 @@ def get_laps():
 def get_driver_stats(season, driver_code):
     """Get aggregate stats for a driver across a season"""
     schedule = ff1.get_event_schedule(season, include_testing=False)
-    
+
     stats = {
         "Races": 0,
         "Points": 0,
@@ -280,50 +280,48 @@ def get_driver_stats(season, driver_code):
         "Avg_Grid": [],
         "Avg_Finish": [],
     }
-    
+
     for _, event in schedule.iterrows():
         event_name = event["EventName"]
-        
+
         try:
             # Load race
             race = ff1.get_session(season, event_name, "R")
             race.load(laps=False, telemetry=False, weather=False, messages=False)
-            
+
             driver_row = race.results[race.results["Abbreviation"] == driver_code]
             if driver_row.empty:
                 continue  # Driver didn't participate
-                
+
             driver_row = driver_row.iloc[0]
             stats["Races"] += 1
             stats["Team"] = driver_row["TeamName"]  # Last team they raced for
-            
+
             # Points
             stats["Points"] += driver_row["Points"]
-            
+
             # Win
             if driver_row["Position"] == 1:
                 stats["Wins"] += 1
-
-
 
             if "Classified" in driver_row.index:
                 is_dnf = not driver_row["Classified"]
                 print(is_dnf)
             else:
-                # fallback for the older seasons (pre-2000s) 
+                # fallback for the older seasons (pre-2000s)
                 # where 'Classified' might not exist in the API response.
                 position = driver_row["Position"]
                 status = driver_row.get("Status", "")
                 is_dnf = (
                     pd.isna(position) or
                     position in ["DNF", "DNS", "DSQ", "NC"] or
-                    status in ["DNF", "DNS", "DSQ", "Retired", "Accident", "Collision", "Engine", "Gearbox"]
+                    status in ["DNF", "DNS", "DSQ", "Retired",
+                               "Accident", "Collision", "Engine", "Gearbox"]
                 )
 
             if is_dnf:
                 stats["DNFs"] += 1
 
-            
             # Average grid position
             try:
                 quali = ff1.get_session(season, event_name, "Q")
@@ -333,19 +331,22 @@ def get_driver_stats(season, driver_code):
                     stats["Avg_Grid"].append(float(quali_row.iloc[0]["Position"]))
             except:
                 pass  # No qualifying data
-            
+
             # Average finish position (only finished races)
             if not is_dnf:
                 stats["Avg_Finish"].append(float(position))
-                
+
         except Exception as e:
             continue  # Skip sessions that fail
-    
+
     # Calculate averages
-    stats["Avg_Grid"] = sum(stats["Avg_Grid"]) / len(stats["Avg_Grid"]) if stats["Avg_Grid"] else None
-    stats["Avg_Finish"] = sum(stats["Avg_Finish"]) / len(stats["Avg_Finish"]) if stats["Avg_Finish"] else None
-    
+    stats["Avg_Grid"] = sum(stats["Avg_Grid"]) / len(stats["Avg_Grid"]
+                                                     ) if stats["Avg_Grid"] else None
+    stats["Avg_Finish"] = sum(stats["Avg_Finish"]) / \
+        len(stats["Avg_Finish"]) if stats["Avg_Finish"] else None
+
     return stats
+
 
 @st.cache_data
 def get_driver_full_name(driver_code, season):
@@ -354,16 +355,16 @@ def get_driver_full_name(driver_code, season):
     schedule = ff1.get_event_schedule(season, include_testing=False)
     if schedule.empty:
         return driver_code
-    
+
     # Try the first race of the season
     try:
         race = ff1.get_session(season, schedule.iloc[0]["EventName"], "R")
         race.load(laps=False, telemetry=False, weather=False, messages=False)
-        
+
         driver_row = race.results[race.results["Abbreviation"] == driver_code]
         if not driver_row.empty:
             return driver_row.iloc[0]["FullName"]
     except:
         pass
-    
+
     return driver_code  # Fallback to code if name not found
